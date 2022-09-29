@@ -22,6 +22,7 @@ func main() {
 func rootHandler(w http.ResponseWriter, r *http.Request) {
     switch r.Method {
     case "GET":
+	fmt.Println("Redirecting client")
 	http.Redirect(w, r, redirectTo, http.StatusSeeOther)
     case "POST":
 	r.ParseForm()
@@ -30,11 +31,13 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	    url := r.Form.Get("url")
 	    fmt.Println("url:", url)
 	    redirectTo = url
+	    fmt.Println("Redirection updated to ", url)
 	    fmt.Fprintf(w, "Redirection updated successfully.\n")
 	} else {
 	    fmt.Fprintf(w, "Invalid Token.\n")
 	}
     default:
+	fmt.Println("Invalid request")
 	fmt.Fprintf(w, "Invalid method.\n")
     }
 }
